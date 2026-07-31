@@ -6,11 +6,11 @@
 >
 > Completa **todos** los campos. El código del examen ya viene escrito: no lo cambies.
 
-- **Nombre completo:**
-- **Cédula:**
-- **NRC:**
+- **Nombre completo:** Fabricio Fernando Baquero López
+- **Cédula:** 1719271643
+- **NRC:** 30405
 - **Código del examen:** `AGSK-2026`
-- **Fecha y hora de inicio:**      <!-- formato: 2026-XX-XX HH:MM -->
+- **Fecha y hora de inicio:** 2026-07-30 20:10
 
 ---
 
@@ -19,13 +19,13 @@
 Sean `NN` los **dos últimos dígitos** de mi cédula. No hay cálculos: se copian dígitos y
 se busca en una tabla.
 
-| # | Parámetro | Cómo se obtiene | Mi valor |
-|:---:|-----------|-----------------|----------|
-| — | `NN` | los 2 últimos dígitos de mi cédula | |
-| 1 | Nombre de la tabla | `tbl_productos_base_` + `NN` | |
-| 2 | Puerto | `81` + `NN` | |
-| 3 | Categoría | según el **último dígito** (tabla de abajo) | |
-| — | Audiencia para el prompt de IA | según la categoría | |
+| # | Parámetro | Cómo se obtiene | Mi valor                   |
+|:---:|-----------|-----------------|----------------------------|
+| — | `NN` | los 2 últimos dígitos de mi cédula | 43                         |
+| 1 | Nombre de la tabla | `tbl_productos_base_` + `NN` | tbl_productos_base_43      |
+| 2 | Puerto | `81` + `NN` | 8143                       |
+| 3 | Categoría | según el **último dígito** (tabla de abajo) | Café                       |
+| — | Audiencia para el prompt de IA | según la categoría | cafeterías de especialidad |
 
 **Tabla de categorías:**
 
@@ -69,4 +69,4 @@ Declaro que este repositorio es de mi autoría individual, que sustentaré oralm
 decisión de diseño que contiene, y que el historial de commits refleja fielmente el
 proceso de desarrollo que realicé.
 
-**Firma (nombre completo):**
+**Firma (nombre completo):** Fabricio Fernando Baquero López
