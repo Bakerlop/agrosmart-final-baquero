@@ -17,35 +17,39 @@
 
 ## Datos
 
-- **Nombre:**
-- **Cédula:**
-- **NN (dos últimos dígitos):**
-- **Categoría asignada (según el último dígito):**
+- **Nombre:** Fabricio Fernando Baquero López
+- **Cédula:** 1719271643
+- **NN (dos últimos dígitos):** 43
+- **Categoría asignada (según el último dígito):** Café
 
 ---
 
 ## Fase 1 — Configuración y perfiles
 
 **1.1** ¿Qué archivo activa el perfil `prod` y qué línea exacta lo hace?
-
+> El perfil `prod` se activa desde el archivo `src/main/resources/application.properties` mediante la propiedad:
+>
+> ```properties
+> spring.profiles.active=prod
+> ```
 >
 
 **1.2** Pega la línea del log de arranque donde se ve tu puerto y el perfil activo.
 
-```
-
+```text
+The following 1 profile is active: "prod"
+Netty started on port 8143 (http)
 ```
 
 **1.3** ¿Qué habría pasado si dejabas `ddl-auto=create-drop` en lugar de `update`?
 Responde pensando en tus datos sembrados.
 
->
+> Si hubiera utilizado spring.jpa.hibernate.ddl-auto=create-drop, la estructura de la base de datos se eliminaría al finalizar la aplicación y se volvería a crear en cada ejecución. Esto ocasionaría la pérdida de los datos sembrados y tendría que recrearlos en cada inicio. Por ello configuré update, para conservar el esquema y los datos existentes entre ejecuciones.
 
 **1.4** ¿Levantaste PostgreSQL con `compose.yaml` (Opción A) o con una instalación local
 (Opción B)? ¿Qué ventaja tiene la que elegiste?
 
->
-
+> Levanté PostgreSQL utilizando Docker mediante `compose.yaml`. Elegí esta opción porque permite disponer de un entorno reproducible y aislado, facilita la configuración de la base de datos y evita instalar PostgreSQL directamente en el sistema operativo.
 ---
 
 ## Fase 2 — Persistencia con JPA/Hibernate
