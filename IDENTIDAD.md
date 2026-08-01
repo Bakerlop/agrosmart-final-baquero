@@ -58,7 +58,7 @@ se busca en una tabla.
 
 - **Enlace al video (5 min, cámara + pantalla):**
 - **Plataforma:**                  <!-- Drive institucional / OneDrive / YouTube no listado -->
-- **Acceso verificado en incógnito:**   ☐ Sí
+- **Acceso verificado en incógnito:**   Sí
 - **Duración real:**
 
 ---
