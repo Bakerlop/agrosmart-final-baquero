@@ -1,5 +1,6 @@
 package ec.edu.espe.agrosmart.service;
 
+import ec.edu.espe.agrosmart.ai.AgroSmartAIService;
 import ec.edu.espe.agrosmart.domain.exception.ProductoNoEncontradoException;
 import ec.edu.espe.agrosmart.domain.function.ProductoFilters;
 import ec.edu.espe.agrosmart.domain.mapper.ProductoMapper;
@@ -11,12 +12,11 @@ import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.util.List;
 
 @Service
 public class ProductoService {
-
-    private final ProductoRepository repository;
 
     private static final Producto PRODUCTO_GENERICO = new Producto(
             0L,
@@ -26,8 +26,15 @@ public class ProductoService {
             List.of("notificaciones@agrosmart.ec")
     );
 
-    public ProductoService(ProductoRepository repository) {
+    private final ProductoRepository repository;
+    private final AgroSmartAIService aiService;
+
+    public ProductoService(
+            ProductoRepository repository,
+            AgroSmartAIService aiService
+    ) {
         this.repository = repository;
+        this.aiService = aiService;
     }
 
     public Flux<Producto> obtenerProductosComercializables() {
@@ -78,5 +85,34 @@ public class ProductoService {
                 .switchIfEmpty(
                         Mono.error(new ProductoNoEncontradoException(id))
                 );
+    }
+
+    public Mono<String> generarPublicidad(
+            String producto,
+            String audiencia
+    ) {
+
+        // Difiere la llamada bloqueante al proveedor de IA
+        // hasta que exista una suscripción.
+        return Mono.fromCallable(
+                        () -> aiService.generarPublicidad(
+                                producto,
+                                audiencia
+                        )
+                )
+
+                // La llamada HTTP de LangChain4j puede bloquear el hilo,
+                // por eso se ejecuta fuera del event loop.
+                .subscribeOn(Schedulers.boundedElastic())
+
+                // Cancela la operación si el proveedor tarda más de 30 segundos.
+                .timeout(Duration.ofSeconds(30))
+
+                // Convierte cualquier fallo externo en una respuesta controlada.
+                .onErrorResume(error -> Mono.just(
+                        "Publicidad no disponible en este momento ("
+                                + error.getClass().getSimpleName()
+                                + ")"
+                ));
     }
 }
